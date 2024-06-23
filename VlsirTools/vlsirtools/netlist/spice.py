@@ -580,9 +580,11 @@ class NgspiceNetlister(SpiceNetlister):
         txt = f'.lib "{lib.path}" {lib.section}'
         return self.writeln(txt)
 
-    def write_save(self, save: vsp.Save) -> None:
-        # FIXME!
-        raise NotImplementedError(f"Unimplemented Save {save} for {self}")
+    def write_save(self, save: vsp.Save) -> None: 
+        if save == save.SaveMode.ALL: 
+            self.writeln(".save all")
+        else: 
+            raise NotImplementedError(f"Unimplemented Save {save} for {self}") 
 
     def write_meas(self, meas: vsp.Meas) -> None:
         txt = f".meas {meas.analysis_type} {meas.name} {meas.expr}"
